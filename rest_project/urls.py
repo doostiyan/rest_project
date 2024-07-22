@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from rest_framework.authtoken import views
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 # from api.views import RevokeToken
 app_name = 'main'
@@ -27,8 +28,8 @@ urlpatterns = [
     # path('api-auth/', include('rest_framework.urls')), # login session
     path('', include('blog.urls')),
     path('api/', include('api.urls')),
-    path('api/token-auth/', views.obtain_auth_token),
-    # path('api/revoke/', RevokeToken.as_view()),
+    # path('api/token-auth/', views.obtain_auth_token),
+    # # path('api/revoke/', RevokeToken.as_view()),
     path('api/rest-auth/', include('dj_rest_auth.urls')),
     path('api/rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/rest-auth/password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(),
@@ -37,5 +38,6 @@ urlpatterns = [
     #     r'^account-confirm-email/(?P<key>[-:\w]+)/$', TemplateView.as_view(),
     #     name='account_confirm_email',
     # ),        # فرستادن پیام تاییدیه ایمیل برای کاربر
-
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
