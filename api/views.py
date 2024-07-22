@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
+from rest_framework import status
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from api.permissions import IsSuperUser, IsStaffOrReadOnly, IsAuthorOrReadOnly, IsSuperUserOrStaffReadOnly
 from api.serializers import ArticleSerializer, UserSerializer
@@ -37,3 +40,10 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+
+# class RevokeToken(APIView):
+#     permission_classes = (IsAuthenticated,)
+#
+#     def delete(self, request):
+#         request.auth.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)

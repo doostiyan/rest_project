@@ -14,14 +14,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from dj_rest_auth.views import PasswordResetConfirmView
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from django.views.generic import TemplateView
 from rest_framework.authtoken import views
 
+# from api.views import RevokeToken
+app_name = 'main'
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('api-auth/', include('rest_framework.urls')), # login session
     path('', include('blog.urls')),
     path('api/', include('api.urls')),
     path('api/token-auth/', views.obtain_auth_token),
+    # path('api/revoke/', RevokeToken.as_view()),
+    path('api/rest-auth/', include('dj_rest_auth.urls')),
+    path('api/rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('api/rest-auth/password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(),
+         name='password_reset_confirm'),  # override and fix bug url dj-rest-auth
+    # re_path(
+    #     r'^account-confirm-email/(?P<key>[-:\w]+)/$', TemplateView.as_view(),
+    #     name='account_confirm_email',
+    # ),        # فرستادن پیام تاییدیه ایمیل برای کاربر
+
 ]
