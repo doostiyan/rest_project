@@ -31,6 +31,23 @@ from blog.models import Article
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    filterset_fields = ['status', 'author__username']
+    search_fields = ['title', 'author__username', 'content', 'author__first_name', 'author__last_name']
+    ordering_fields = ['status', 'publish']
+
+    # def get_queryset(self):
+    #     queryset = Article.objects.all()
+    #
+    #     # status = self.request.query_params.get('status')
+    #     # if status is not None:
+    #     #     queryset = queryset.filter(status=status)
+    #     # return queryset
+    #     #
+    #     # author = self.request.query_params.get('author')
+    #     # if author is not None:
+    #     #     queryset = queryset.filter(author__username=author)
+    #     # return queryset
+
 
     def get_permissions(self):
         if self.action in ['list', 'create']:

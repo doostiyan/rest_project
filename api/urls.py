@@ -15,6 +15,6 @@ from .views import UserViewSet, ArticleViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('users', UserViewSet, ),
-router.register('', ArticleViewSet, ),
+router.register('users', UserViewSet, basename='users'),
+router.register('articles', ArticleViewSet, basename='articles'),
 urlpatterns = router.urls
