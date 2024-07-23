@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 # from api.views import ArticleListView, ArticleDetailView, UserDetailView, UserListView
 
@@ -17,4 +17,8 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register('users', UserViewSet, basename='users'),
 router.register('articles', ArticleViewSet, basename='articles'),
-urlpatterns = router.urls
+
+urlpatterns = [
+        path('', include(router.urls)),
+        # path('authors/<int:pk>/', AuthorRetrieve.as_view(), name='authors-detail'),   #hyperlink
+]

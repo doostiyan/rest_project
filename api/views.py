@@ -1,13 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from rest_framework import status, viewsets
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.permissions import IsSuperUser, IsStaffOrReadOnly, IsAuthorOrReadOnly, IsSuperUserOrStaffReadOnly
-from api.serializers import ArticleSerializer, UserSerializer
+from api.serializers import ArticleSerializer, UserSerializer, AuthorSerializer
 from blog.models import Article
 
 
@@ -48,7 +48,6 @@ class ArticleViewSet(viewsets.ModelViewSet):
     #     #     queryset = queryset.filter(author__username=author)
     #     # return queryset
 
-
     def get_permissions(self):
         if self.action in ['list', 'create']:
             permission_classes = [IsStaffOrReadOnly]
@@ -81,3 +80,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsSuperUserOrStaffReadOnly, ]
+
+
+# class AuthorRetrieve(RetrieveAPIView):                    # hyperlink
+#     queryset = get_user_model().objects.filter(is_staff=True)
+#     serializer_class = AuthorSerializer
