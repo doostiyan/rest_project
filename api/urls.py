@@ -1,5 +1,7 @@
 from django.urls import path, include
 
+from . import views
+
 # from api.views import ArticleListView, ArticleDetailView, UserDetailView, UserListView
 
 app_name = 'api'
@@ -21,4 +23,8 @@ router.register('articles', ArticleViewSet, basename='articles'),
 urlpatterns = [
         path('', include(router.urls)),
         # path('authors/<int:pk>/', AuthorRetrieve.as_view(), name='authors-detail'),   #hyperlink
+        path('question/', views.QuestionListView.as_view(),),
+        path('question/create/', views.QuestionCreateView.as_view(),),
+        path('question/update/<int:pk>/', views.QuestionUpdateView.as_view(),),
+        path('question/delete/<int:pk>/', views.QuestionDeleteView.as_view(),),
 ]

@@ -1,10 +1,13 @@
 from django.contrib.auth import get_user_model
 from drf_dynamic_fields import DynamicFieldsMixin
 from rest_framework import serializers
+
+from api.custom_relational_field import UserEmailRelationalField
+from api.models import Question, Answer
 from blog.models import Article
 
 
-class AuthorSerializer( serializers.ModelSerializer):
+class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['id', 'username', 'first_name', 'last_name', 'email']
@@ -38,3 +41,21 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = '__all__'
 
+
+class QuestionSerializer(serializers.ModelSerializer):
+    answer = serializers.SerializerMethodField()
+    user = UserEmailRelationalField(read_only=True)
+
+    class Meta:
+        model = Question
+        fields = '__all__'
+
+    def get_answer(self, obj):
+        result = obj.answers.all()
+        return AnswerSerializer(instance=result, many=True)
+
+
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = '__all__'
