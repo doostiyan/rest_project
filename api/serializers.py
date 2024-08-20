@@ -29,7 +29,7 @@ class ArticleSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
         # fields = ('title', 'content', 'author', 'slug', 'status')
         exclude = ('created', 'updated')
 
-    def validate_title(self, value):
+    def validate_title(self, value):  # validation serializer داخل تایتل اگه این حرفها بود ارور بده
         filter_list = ['java', 'python', 'javascript']
         for i in filter_list:
             if i in value:

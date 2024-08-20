@@ -31,7 +31,7 @@ urlpatterns = [
     # path('api-auth/', include('rest_framework.urls')), # login session
     path('', include('blog.urls')),
     path('api/', include('api.urls')),
-    # path('api/token-auth/', views.obtain_auth_token),
+    # path('api/token-auth/', views.obtain_auth_token), # token
     # # path('api/revoke/', RevokeToken.as_view()),
     path('api/rest-auth/', include('dj_rest_auth.urls')),
     path('api/rest-auth/registration/', include('dj_rest_auth.registration.urls')),

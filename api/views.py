@@ -17,7 +17,7 @@ from blog.models import Article
 #     #     print('---------------------')
 #     #     print(self.request.user)
 #     #     print('---------------------')
-#     #     print(self.request.auth)
+#     #     print(self.request.auth) # token
 #     queryset = Article.objects.all()
 #     serializer_class = ArticleSerializer
 #
@@ -36,18 +36,18 @@ class ArticleViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'author__username', 'content', 'author__first_name', 'author__last_name']
     ordering_fields = ['status', 'publish']
 
-    # def get_queryset(self):
+    # def get_queryset(self): # فیلتر کردن بر اساس query params
     #     queryset = Article.objects.all()
     #
-    #     # status = self.request.query_params.get('status')
-    #     # if status is not None:
-    #     #     queryset = queryset.filter(status=status)
-    #     # return queryset
-    #     #
-    #     # author = self.request.query_params.get('author')
-    #     # if author is not None:
-    #     #     queryset = queryset.filter(author__username=author)
-    #     # return queryset
+    #     status = self.request.query_params.get('status')
+    #     if status is not None:
+    #         queryset = queryset.filter(status=status)
+    #     return queryset
+    #
+    #     author = self.request.query_params.get('author')
+    #     if author is not None:
+    #         queryset = queryset.filter(author__username=author)
+    #     return queryset
 
     def get_permissions(self):
         if self.action in ['list', 'create']:
@@ -69,7 +69,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
 #     serializer_class = UserSerializer
 
 
-# class RevokeToken(APIView):
+# class RevokeToken(APIView): # remove token 
 #     permission_classes = (IsAuthenticated,)
 #
 #     def delete(self, request):
